@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>...</title>
+
+<style>
+body{
+margin:0;
+background:black;
+color:white;
+font-family:"Times New Roman", serif;
+overflow-x:hidden;
+transition:opacity 10s ease;
+}
+
+.container{
+max-width:650px;
+margin:auto;
+padding:160px 30px;
+}
+
+.line{
+opacity:0;
+transform:translateY(80px);
+font-size:26px;
+line-height:2;
+margin:100px 0;
+transition:all 3s ease;
+}
+
+.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.fade-out{
+opacity:0;
+}
+
+/* 🌸 ending text */
+.ending{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
+opacity:0;
+transition:opacity 5s ease;
+text-align:center;
+}
+
+.ending.show{
+opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song" loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<div class="line">ada masa ketika apa yg terjadi di antara kita meninggalkan luka yang bahkan i didn’t understand how to fix it..</div>
+
+<div class="line">it took me a while to realize bahwa sebenarnya orang yang terluka kadang tanpa sadar melukai oranglain juga, dan itu wajar jika terjadi.</div>
+
+<div class="line">i don't want to reopen anything nor to blame u</div>
+
+<div class="line">i just hope u know tht whtever u were fight with ur life, u didn’t hv to face it alone.</div>
+
+<div class="line">as a human who can make a false.. i dont hate u. i can't hate u, really. cs u're my first, my everything, my only one.</div>
+
+<div class="line">sincerely, i hope life becomes kinder to u, n tht someday u can find peace within urself.</div>
+
+<div class="line">—from gyu's girl, fira</div>
+
+</div>
+
+<!-- 🌸 ending -->
+<div id="ending" class="ending">i love u, d💐🤍</div>
+
+<script>
+const lines = document.querySelectorAll('.line');
+const audio = document.getElementById("song");
+const ending = document.getElementById("ending");
+
+let index = 0;
+let started = false;
+
+document.addEventListener("click", () => {
+
+if(!started){
+startMusic();
+started = true;
+}
+
+if(index < lines.length){
+
+let delay = (index === lines.length - 1) ? 1500 : 300;
+
+setTimeout(()=>{
+lines[index].classList.add("show");
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+}, delay);
+
+index++;
+}
+
+if(index === lines.length){
+setTimeout(endScene, 8000);
+}
+
+});
+
+function startMusic(){
+audio.volume = 0;
+audio.play();
+
+let fadeIn = setInterval(()=>{
+if(audio.volume < 0.6){
+audio.volume += 0.05;
+}else{
+clearInterval(fadeIn);
+}
+},300);
+}
+
+function endScene(){
+
+// fade out layar
+document.body.classList.add("fade-out");
+
+// fade out musik
+let fadeOut = setInterval(()=>{
+if(audio.volume > 0.02){
+audio.volume -= 0.02;
+}else{
+audio.pause();
+clearInterval(fadeOut);
+}
+},400);
+
+// 🌸 munculin ending setelah gelap
+setTimeout(()=>{
+ending.classList.add("show");
+},4000);
+
+}
+</script>
+
+</body>
+</html>
